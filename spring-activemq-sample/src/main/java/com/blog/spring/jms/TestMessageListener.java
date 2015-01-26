@@ -39,7 +39,7 @@ public class TestMessageListener implements MessageListener
 				logger_c.debug("About to process message: " + msgText);
 
 				/* call message sender to put message onto second queue */
-				messageSender_i.sendMessage(msgText);
+				messageSender_i.sendMessage(msgText + ": Prince MAc!!!");
 
 			}
 			catch (JMSException jmsEx_p)

@@ -12,7 +12,7 @@
   			 type="org.apache.activemq.ActiveMQConnectionFactory"
   			 description="JMS Connection Factory"
         	 factory="org.apache.activemq.jndi.JNDIReferenceFactory"
-        	 brokerURL="tcp://localhost:61616" />
+        	 brokerURL="tcp://192.168.0.106:61616" />
 
    <!--
    		This is a reference to the first Queue we defined
