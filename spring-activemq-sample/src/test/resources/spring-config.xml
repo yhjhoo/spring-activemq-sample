@@ -28,7 +28,7 @@
 	</bean>
 	
 	<bean id="testQueueTwo" class="org.apache.activemq.command.ActiveMQQueue">
-		<property name="physicalName" value="testQueueTwo"/>
+		<property name="physicalName" value="TestQueueTwo"/>
 	</bean>
 
 	<!-- Our message listener implementation that implements the JMS MessageListener interface and implements the

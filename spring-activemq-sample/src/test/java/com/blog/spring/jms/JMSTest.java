@@ -2,12 +2,22 @@ package com.blog.spring.jms;
 
 
 
-import javax.jms.Queue;
+import java.util.Date;
 
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Queue;
+import javax.jms.TextMessage;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.test.annotation.Repeat;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -18,16 +28,38 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 //		"classpath*:META-INF/context.xml",
 //		"file:src/main/webapp/META-INF/context.xml",
 //		"file:src/main/webapp/WEB-INF/config/spring-config.xml"
-		"classpath*:/spring_*.xml"
+		"classpath*:/spring-*.xml"
 		})
 public class JMSTest {
-
 	@Autowired
+//	@Qualifier("jmsTemplate")
 	private JmsTemplate jmsTemplate;
 	
+	@Autowired
+	private Queue testQueueTwo;
+	
+
+	private Log log = LogFactory.getLog(this.getClass());
+	
 	@Test
-	public void test(){
-		private Queue testQueue_i;
-		jmsTemplate_i.convertAndSend(testQueue_i, message_p);
+	@Repeat(100)
+	public void testSendJMS(){
+		log.info("testSendJMS");
+		jmsTemplate.convertAndSend(testQueueTwo, "Hahahah" + new Date() );
+	}
+	
+	@Test
+	@Repeat(100)
+	public void testRecieveJMS() throws JMSException{
+		jmsTemplate.setDefaultDestination(testQueueTwo);
+		jmsTemplate.setReceiveTimeout(500);
+		Message msg = jmsTemplate.receive();
+		if (msg instanceof TextMessage){
+			TextMessage tm = (TextMessage) msg;
+			System.out.println(tm.getText() );
+		}else{
+			System.out.println();
+		}
+		
 	}
 }
